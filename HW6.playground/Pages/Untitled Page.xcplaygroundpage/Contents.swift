@@ -19,23 +19,26 @@ import UIKit
  */
 class Orange {
     
-    var color: String
-    let taste: String
-    let radius: Double
-    var orangeVolume: Double
+    var color = ""
+    var taste = ""
+    var radius = 0.0
+    
+    var orangeVolume = 0.0
+    
+    init() {}
     
     init(color: String, taste: String, radius: Double) {
         self.color = color
         self.taste = taste
         self.radius = radius
-        self.orangeVolume = 4 / 3 * Double.pi * pow(Double(radius), 3)
     }
     
-    func calculateOrangeVolume(radius: Double) -> Double {
-        orangeVolume = 4 / 3 * Double.pi * pow(Double(radius), 3)
-        return orangeVolume
+    func calculateOrangeVolume() {
+        orangeVolume = 4 / 3 * Double.pi * pow(radius, 3)
+      print("Объем апельсина равен \(orangeVolume)")
     }
 }
+
 
 //: 1.2 Создайте экземпляр класса `Orange` с именем `someOrange`
 
@@ -55,15 +58,18 @@ var someOrange = Orange(color: "orange", taste: "sweet", radius: 95)
 someOrange.color
 someOrange.taste
 someOrange.radius
+
+someOrange.calculateOrangeVolume()
 someOrange.orangeVolume
 
 //: 1.4 Выведите на консоль сообщение «Orange has <...> color and <...> taste». Обращайтесь к этим значениям напрямую через экземпляр класса, не создавая для них отдельных переменных
 print("Orange has \(someOrange.color) color and \(someOrange.taste) taste")
 //: 1.5 Создайте новую константу `orangeVolume` и присвойте ей значение объема апельсина (Число Пи в Swift можно получить через константу `Double.pi`. Формулу расчета можно погуглить). Выведите значение `orangeVolume` на консоль
 
-let orangeVolume = 4 / 3 * Double.pi * pow(Double(150), 3)
-
-
+let orangeVolume = Orange()
+orangeVolume.radius = 150
+orangeVolume.calculateOrangeVolume()
+orangeVolume.orangeVolume
 
 let formatter = NumberFormatter()
 formatter.numberStyle = NumberFormatter.Style.decimal
@@ -71,7 +77,7 @@ formatter.roundingMode = NumberFormatter.RoundingMode.up
 formatter.maximumFractionDigits = 3
 formatter.minimumFractionDigits = 3
 
-print(formatter.string(from: NSNumber(value: orangeVolume))!)
+print(formatter.string(from: NSNumber(value: orangeVolume.orangeVolume))!)
 
 /*:
  1.6 Дополните класс `Orange` новым свойством `orangeVolume`
@@ -81,8 +87,6 @@ print(formatter.string(from: NSNumber(value: orangeVolume))!)
  1.8 Вызовите метод calculateOrangeVolume
  */
 
-
-someOrange.calculateOrangeVolume(radius: 100)
 
 
 
@@ -142,38 +146,22 @@ print("Мощность двигателя \(hondaCivic.name) составляе
 
 
 struct PlayerInChess {
-    var name: String = "Игрок"
-    var wins: Int = 0
+    var name: String
+    var wins: Int
     
-    init() {}
-    
-    init(name: String, wins: Int) {
-        self.name = name
-        self.wins = wins
-    }
-    
-    func description(name: String, wins: Int) {
+    func description() {
         print("Игрок \(name), количество побед  \(wins)")
     }
     
-    func addWins(number: Int) {
-        var newNumberWins = wins
-        newNumberWins += number
-        print("Увеличенное число побед \(newNumberWins)")
+    mutating func addWins(number: Int) {
+        wins += number
+        print("Увеличенное число побед \(wins)")
     }
 }
 
-let player1 = PlayerInChess(name: "Boris", wins: 15)
+var player1 = PlayerInChess(name: "Boris", wins: 5)
 
-player1.description(name: player1.name, wins: player1.wins)
-
-let player2 = PlayerInChess.init()
-
-player2.description(name: player2.name, wins: player2.wins)
-
-
-
-
+player1.description()
 
 
 /*:
@@ -181,12 +169,9 @@ player2.description(name: player2.name, wins: player2.wins)
  
  3.6 Вызовите метода addWins из экземпляра структуры, затем вызовите метод description
  */
+player1.addWins(number: 3)
 
-player1.addWins(number: 15)
-
-player1.description(name: "Max", wins: 25)
-
-
+player1.description()
 
 /*:
  ## Задание 4
